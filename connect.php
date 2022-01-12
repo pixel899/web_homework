@@ -6,8 +6,5 @@
       echo mysqli_connect_error();
       exit();
     }
-   else
-   {
-    mysqli_set_charset(utf8);
-   }
+   
  ?>

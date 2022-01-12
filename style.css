@@ -3,12 +3,12 @@ body {
     margin: 0;
     padding: 0;
     text-align: inherit;
-  }
+}
   
- b{
+b{
  	font-size: 10pt;
  	text-align: inherit;
- }
+}
 .field{
 	border: 1px solid #aaa;
 	border-radius: 3px;
@@ -22,9 +22,9 @@ body {
 	background: #C0C0C0;
 	padding: 5px;
 }
- .main{
+main{
  	max-width: 1920px; 
- }
+}
 .content{
 	padding: 15px;
 }
@@ -37,7 +37,6 @@ body {
 	padding: 5px;
 	display: inline-block;
 }
-
 #menu, #menu li {
         margin: 0;
         padding: 0;
@@ -80,8 +79,7 @@ body {
 .table th {
     font-weight: bold;
     padding: 5px;
-    background: #C0C0C0;
-    
+    background: #C0C0C0;  
 }
 .table td{
     padding: 5px 10px;
@@ -146,7 +144,4 @@ div.field1 label {
     max-width: 90%; 
     width: 400px;
     height: 100px;
-
 }
-
-
