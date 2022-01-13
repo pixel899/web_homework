@@ -54,22 +54,30 @@
 				$age = trim($_POST['age']);
 			}
 
-
 			if(isset($_POST['submit']))
-			{
+			{	
+
+				if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$name))) {
+					printf("<p><b>&nbsp&nbspВведите корректное имя</b></p>");
+					goto End;
+				}
+				if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$surname))) {
+					printf("<p><b>&nbsp&nbspВведите корректную фамилию</b></p>");
+					goto End;
+				}
+				if ($age == NULL)
+				{
+					printf("<p><b>&nbsp&nbspВведите возраст</b></p>");
+					goto End;
+				}	
 
 				$result = mysqli_query($connection, "CALL insert_patient ('{$name}','{$surname}','{$sex}','{$age}')");
 
-				if($result)
-				{
-				printf("<p><b>&nbsp&nbspЗапись успешно добавлена!</b></p>");}
+				if($result) {printf("<p><b>&nbsp&nbspЗапись успешно добавлена!</b></p>");exit;}
+				else goto End;
 
-				else {printf("<p><b>&nbsp&nbspВозникли ошибки при заполнении формы!</b></p>");}
-
-				unset($name);
-				unset($surname);
-				unset($sex);
-				unset($age);
+				End:
+			    {printf("<p><b>&nbsp&nbspВозникли ошибки при заполнении формы!</b></p>");exit;}	
 			}
 			?> 
 		</main>

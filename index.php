@@ -72,7 +72,7 @@
 					if(isset($_POST['submit']))
 					{
 
-						$result = mysqli_query ($connection, "SELECT * FROM document WHERE (`ID_NCARD` = '$NCARD') OR (`ID_NPERSONNEL` = '$NPERSONNEL') OR (`room` = '$room') AND `date` BETWEEN '$date1' AND '$date2' ORDER BY `date`");
+						$result = mysqli_query ($connection, "SELECT * FROM document WHERE (`date` BETWEEN '$date1' AND '$date2')  AND `ID_NCARD` LIKE '$NCARD' OR `ID_NPERSONNEL` LIKE '$NPERSONNEL' OR `room` LIKE '$room' ORDER BY `date` ");
 						$count = mysqli_num_rows($result);
 						$row = mysqli_fetch_assoc($result);
 
