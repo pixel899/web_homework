@@ -105,6 +105,12 @@
 
 				printf("<p><b>&nbsp&nbspЗапись успешно добавлена!</b></p>");
 		    }
+
+		    catch (PDOException $e)
+			{
+				echo("<p><b>&nbsp&nbspВозникла непредвиденная ошибка: </b></p>") , $e->getMessage() . "<br/>";
+				die();
+			}   
 		    
 		    catch(Exception $e)
 		    {
