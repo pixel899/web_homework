@@ -37,20 +37,20 @@
 						<b>Диагноз:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b><?php
 						require 'connect.php';
 						$sql = "SELECT * FROM diagnosis";
-						$result_select = mysqli_query($connection, $sql);
+						$result_select = $con->query($sql);
 						echo "<select name = 'diagnos' class='select-css'>";
 				  	    echo "<option>Выбор</option>";
-				  		while($object = mysqli_fetch_object($result_select)){
+				  		while($object = $result_select->fetchObject()){
 				        echo "<option> $object->title </option>";}
 				    	echo "</select>";
 				    	?>
 				    	<p><b>Состояние:&nbsp&nbsp</b>
 				    	<?php
 						$sql = "SELECT * FROM state_health";
-						$result_select = mysqli_query($connection, $sql);
+						$result_select = $con->query($sql);
 						echo "<select name='state' class='select-css' style='margin-left: -2.5px;'>";
 				  	    echo "<option>Выбор</option>";
-				  		while($object = mysqli_fetch_object($result_select)){
+				  		while($object = $result_select->fetchObject()){
 				        echo "<option> $object->title </option>";}
 				    	echo "</select>";
 				    	?>
@@ -79,19 +79,39 @@
 
 		if(isset($_POST['submit']))
 		{
+			try
+			{
 
-			$id_diagnos = mysqli_query ($connection,"SELECT ID FROM `diagnosis` WHERE `title` = '$diagnos'");
-			$row = mysqli_fetch_assoc($id_diagnos);
-			$w = $row['ID'];
-			$id_state = mysqli_query ($connection,"SELECT ID FROM `state_health` WHERE `title` = '$state'");
-			$row2 = mysqli_fetch_assoc($id_state);
-			$z = $row2['ID'];    
+				if(empty($date)) throw new Exception ("<p><b>&nbsp&nbspНе заполнена дата</b></p>");
+				if(empty($NCARD)) throw new Exception ("<p><b>&nbsp&nbspНе заполнен номер амбулаторной карты</b></p>");
+				if(empty($NPERSONNEL)) throw new Exception ("<p><b>&nbsp&nbspНе заполнен табельный номер врача</b></p>");
+				
 
-			$res = mysqli_query ($connection, "INSERT INTO `document` (ID_NCARD,ID_NPERSONNEL,date,ID_diagnosis,ID_state,prescription,procedures,room,comment) VALUES ('{$NCARD}','{$NPERSONNEL}','{$date}','{$w}','{$z}','{$prescription}','{$procedures}','{$room}','{$comment}')");
+				$id_diagnos = $con->prepare("SELECT ID FROM `diagnosis` WHERE `title` = :diagnos");
+				$id_diagnos->execute(array(':diagnos' => $diagnos));
+				$row = $id_diagnos->fetch();
+				$w = $row['ID'];
+				$id_state = $con->prepare("SELECT ID FROM `state_health` WHERE `title` = :state");
+				$id_state->execute(array(':state' => $state));
+				$row2 = $id_state->fetch();
+				$z = $row2['ID'];
 
+				if(empty($w)) throw new Exception ("<p><b>&nbsp&nbspНе выбран Диагноз</b></p>");
+				if(empty($z)) throw new Exception ("<p><b>&nbsp&nbspНе выбрано Состояние</b></p>");    
 
-			if($res) {printf("<p><b>&nbsp&nbspЗапись успешно добавлена!</b></p>");}
-			else {printf("<p><b>&nbsp&nbspВозникли ошибки при заполнении формы!</b></p>");}
+				$sql = "INSERT INTO `document` (ID_NCARD,ID_NPERSONNEL,date,ID_diagnosis,ID_state,prescription,procedures,room,comment) VALUES ('{$NCARD}','{$NPERSONNEL}','{$date}','{$w}','{$z}','{$prescription}','{$procedures}','{$room}','{$comment}')";
+				$res = $con->prepare($sql);
+				$res->execute([$NCARD,$NPERSONNEL,$date,$w,$z,$prescription,$procedures,$room,$comment]);
+
+				printf("<p><b>&nbsp&nbspЗапись успешно добавлена!</b></p>");
+		    }
+		    
+		    catch(Exception $e)
+		    {
+		    	echo("<p><b>&nbsp&nbspВозникла ошибка: </b></p>") , $e->getMessage(), "\n";
+		    	die();
+		    }
+		    
 		}
 		?>              
 	</body>

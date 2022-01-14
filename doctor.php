@@ -38,8 +38,9 @@
 					<?php 
 					require 'connect.php';
 					$sql = "SELECT * FROM doctor ";
-					$result = mysqli_query($connection, $sql);
-					$row = mysqli_fetch_assoc($result); 
+					$result = $con->query($sql);
+					$result->execute();
+					$row = $result->fetch(); 
 					do
 					{						 				 
 						?>
@@ -50,7 +51,7 @@
 								<td><?php echo $row["position"]; ?></td>	
 							</tr>
 						<?php  
-					}while ($row = mysqli_fetch_assoc($result));  
+					}while ($row = $result->fetch());  
 					?>  	
 				</tbody>
 			</table>

@@ -56,28 +56,30 @@
 
 			if(isset($_POST['submit']))
 			{	
+				try{
 
-				if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$name))) {
-					printf("<p><b>&nbsp&nbspВведите корректное имя</b></p>");
-					goto End;
-				}
-				if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$surname))) {
-					printf("<p><b>&nbsp&nbspВведите корректную фамилию</b></p>");
-					goto End;
-				}
-				if ($age == NULL)
-				{
-					printf("<p><b>&nbsp&nbspВведите возраст</b></p>");
-					goto End;
-				}	
+					if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$name)))
+						throw new Exception	("<p><b>&nbsp&nbspВведите корректное имя</b></p>");
+						
+					if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$surname))) 
+						throw new Exception ("<p><b>&nbsp&nbspВведите корректную фамилию</b></p>");
+						
+					if (empty($age))
+						throw new Exception ("<p><b>&nbsp&nbspВведите возраст</b></p>");
 
-				$result = mysqli_query($connection, "CALL insert_patient ('{$name}','{$surname}','{$sex}','{$age}')");
 
-				if($result) {printf("<p><b>&nbsp&nbspЗапись успешно добавлена!</b></p>");exit;}
-				else goto End;
+					$sql = "CALL insert_patient (?,?,?,?)";		
+					$result = $con->prepare($sql);
+					$result->execute([$name,$surname,$sex,$age]);
 
-				End:
-			    {printf("<p><b>&nbsp&nbspВозникли ошибки при заполнении формы!</b></p>");exit;}	
+					printf("<p><b>&nbsp&nbspЗапись успешно добавлена!</b></p>");
+
+		        }
+
+		        catch(Exception $e){
+		        	echo("<p><b>&nbsp&nbspВозникла ошибка: </b></p>") , $e->getMessage(), "\n";
+		    	    die();
+		        }	
 			}
 			?> 
 		</main>

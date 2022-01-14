@@ -70,9 +70,10 @@
 					if(isset($_POST['submit']))
 					{
 
-						$result = mysqli_query ($connection, "SELECT * FROM patient WHERE `NCARD`='$ncard' OR `name`='$name' OR `surname`='$surname' OR `age`='$age' ");
-						$count = mysqli_num_rows($result);
-						$row = mysqli_fetch_assoc($result);
+						$result = $con->prepare("SELECT * FROM patient WHERE `NCARD` = ? OR `name`= ? OR `surname` = ? OR `age` = ? ");
+						$result->execute([$ncard,$name,$surname,$age]);
+						$count = $result->fetch(PDO::FETCH_ASSOC);
+						$row = $result->fetch();
 
 						if ($count > 0)
 						{
@@ -86,7 +87,7 @@
 										<td><?php echo $row["age"]; ?></td>	
 									</tr>
 								<?php  
-							}while ($row = mysqli_fetch_assoc($result));  
+							}while ($row = $result->fetch());  
 						}
 						else
 						{

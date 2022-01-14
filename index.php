@@ -72,9 +72,10 @@
 					if(isset($_POST['submit']))
 					{
 
-						$result = mysqli_query ($connection, "SELECT * FROM document WHERE (`date` BETWEEN '$date1' AND '$date2')  AND `ID_NCARD` LIKE '$NCARD' OR `ID_NPERSONNEL` LIKE '$NPERSONNEL' OR `room` LIKE '$room' ORDER BY `date` ");
-						$count = mysqli_num_rows($result);
-						$row = mysqli_fetch_assoc($result);
+						$result = $con->prepare("SELECT * FROM document WHERE (`date` BETWEEN '$date1' AND '$date2')  AND `ID_NCARD` LIKE ? OR `ID_NPERSONNEL` LIKE ? OR `room` LIKE ? ORDER BY `date` ");
+						$result->execute(array($NCARD,$NPERSONNEL,$room));
+						$count = $result->fetch(PDO::FETCH_ASSOC);
+						$row = $result->fetch();
 
 						if ($count > 0)
 						{
@@ -91,7 +92,7 @@
 										<td><?php echo $row['comment']; ?></td>
 									</tr>
 								<?php  
-							}while ($row = mysqli_fetch_assoc($result));  
+							}while ($row = $result->fetch()); 
 						}
 						else
 						{
