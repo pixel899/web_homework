@@ -55,6 +55,108 @@
 					?>  	
 				</tbody>
 			</table>
+
+			<article class="content">
+				<form method='post' action=''>
+					<p><b>Табельный номер: </b><input class="field" type="number" name="NPERSONNEL" size="30" style="margin-left: 9px"></p>
+					<p><b>Имя: </b><input class="field" type="text" name="name" size="30" style="margin-left: 51px"></p>
+					<p><b>Фамилия: </b><input class="field" type="text" name="surname" size="30" style="margin-left: 18px"></p>
+					<p><b>Должность: </b><input class="field" type="text" name="position" size="30" style="margin-left: 5px"></p>
+									
+					<button class="submit" type="submit" name="change">Изменить</button></br></br>
+					<button class="submit" type="submit" name="delete">Удалить</button>
+				</form>
+			</article>
+			<?php
+			require 'connect.php';
+
+				if(isset($_POST['NPERSONNEL']))
+					{
+						$ncard = trim($_POST['NPERSONNEL']);
+					}
+
+				if(isset($_POST['name']))
+					{
+						$ncard = trim($_POST['name']);
+					}
+				if(isset($_POST['surname']))
+					{
+						$ncard = trim($_POST['surname']);
+					}
+				if(isset($_POST['position']))
+					{
+						$ncard = trim($_POST['position']);
+					}
+				if(isset($_POST['change']))
+					{
+						try{
+
+								if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$name)))
+									throw new Exception	("<p><b>&nbsp&nbspВведите корректное имя</b></p>");
+									
+								if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$surname))) 
+									throw new Exception ("<p><b>&nbsp&nbspВведите корректную фамилию</b></p>");
+								if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$position))) 
+									throw new Exception ("<p><b>&nbsp&nbspВведите корректную должность</b></p>");
+								if (empty($NPERSONNEL))
+									throw new Exception ("<p><b>&nbsp&nbspВведите табельный номер</b></p>");
+
+
+								$sql = "UPDATE doctor SET NPERSONNEL = ?, name = ?, surname = ?, position = ?";
+								$result = $con->prepare($sql);
+								$result->execute([$NPERSONNEL,$name,$surname,$position]);
+
+								printf("<p><b>&nbsp&nbspЗапись успешно изменена!</b></p>");
+							}
+							catch (PDOException $e)
+							{
+								echo("<p><b>&nbsp&nbspВозникла непредвиденная ошибка: </b></p>") , $e->getMessage() . "<br/>";
+								die();
+							}   
+
+					        catch(Exception $e)
+					        {
+					        	echo("<p><b>&nbsp&nbspВозникла ошибка: </b></p>") , $e->getMessage(), "\n";
+					    	    die();
+					        }	
+
+					}
+				if(isset($_POST['delete']))
+					{
+						try{
+
+								if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$name)))
+									throw new Exception	("<p><b>&nbsp&nbspВведите корректное имя</b></p>");
+									
+								if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$surname))) 
+									throw new Exception ("<p><b>&nbsp&nbspВведите корректную фамилию</b></p>");
+								if ((!preg_match("/^([а-яА-ЯЁёa-zA-Z]{1,30})$/u",$position))) 
+									throw new Exception ("<p><b>&nbsp&nbspВведите корректную должность</b></p>");
+								if (empty($NPERSONNEL))
+									throw new Exception ("<p><b>&nbsp&nbspВведите табельный номер</b></p>");
+
+								$sql = "DELETE FROM doctor WHERE NPERSONNEL = ?";
+								$result = $con->prepare($sql);
+								$result->execute([$NPERSONNEL]);
+
+								printf("<p><b>&nbsp&nbspЗапись успешно удалена!</b></p>");
+
+							}
+					
+
+							catch (PDOException $e)
+							{
+								echo("<p><b>&nbsp&nbspВозникла непредвиденная ошибка: </b></p>") , $e->getMessage() . "<br/>";
+								die();
+							}   
+
+					        catch(Exception $e)
+					        {
+					        	echo("<p><b>&nbsp&nbspВозникла ошибка: </b></p>") , $e->getMessage(), "\n";
+					    	    die();
+					        }	
+					}
+			?>
 		</main>
 	</body>
 </html>
