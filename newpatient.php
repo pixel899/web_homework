@@ -39,7 +39,13 @@
 				</form>
 			</article>
 			<?php 
-			require 'connect.php';
+			require 'config.php';
+			require 'vendor/autoload.php';
+			use models\database;
+			use controllers\patient;
+					 
+			$dt = new Database();
+			
 			if(isset($_POST['name']))
 			{
 				$name = trim($_POST['name']);
@@ -68,23 +74,18 @@
 						throw new Exception ("<p><b>&nbsp&nbspВведите возраст</b></p>");
 
 
-					$sql = "CALL insert_patient (?,?,?,?)";		
-					$result = $con->prepare($sql);
-					$result->execute([$name,$surname,$sex,$age]);
+
+					$patient = Patients::create_patient($name,$surname,$sex,$age,);
+
 
 					printf("<p><b>&nbsp&nbspЗапись успешно добавлена!</b></p>");
 
 		        }
-		        catch (PDOException $e)
-				{
-					echo("<p><b>&nbsp&nbspВозникла непредвиденная ошибка: </b></p>") , $e->getMessage() . "<br/>";
-					die();
-				}   
-
-		        catch(Exception $e){
-		        	echo("<p><b>&nbsp&nbspВозникла ошибка: </b></p>") , $e->getMessage(), "\n";
-		    	    die();
-		        }	
+		     
+				catch(Exception $e){
+					echo("<p><b>&nbsp&nbspВозникла ошибка: </b></p>") , $e->getMessage(), "\n";
+			    	    die();
+				}	
 			}
 			?> 
 		</main>

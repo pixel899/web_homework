@@ -36,22 +36,25 @@
 					</thead>
 				<tbody>
 					<?php 
-					require 'connect.php';
-					$sql = "SELECT * FROM doctor ";
-					$result = $con->query($sql);
-					$result->execute();
-					$row = $result->fetch(); 
-					do
-					{						 				 
+					require 'config.php';
+					require 'vendor/autoload.php';
+					use models\database;
+					use controllers\doctor;
+					 
+					$dt = new Database();
+					
+					$doctors = Doctors::show_doctor();
+					
+					foreach($doctors as $doctor) {
 						?>
 							<tr>
-								<td><?php echo $row['NPERSONNEL']; ?></td>
-								<td><?php echo $row['name']; ?></td>
-								<td><?php echo $row["surname"]; ?></td>
-								<td><?php echo $row["position"]; ?></td>	
+								<td><?php echo $doctor->NPERSONNEL; ?></td>
+								<td><?php echo $doctor->name; ?></td>
+								<td><?php echo $doctor->surname; ?></td>
+								<td><?php echo $doctor->position; ?></td>	
 							</tr>
 						<?php  
-					}while ($row = $result->fetch());  
+					}
 					?>  	
 				</tbody>
 			</table>
@@ -68,24 +71,23 @@
 				</form>
 			</article>
 			<?php
-			require 'connect.php';
 
 				if(isset($_POST['NPERSONNEL']))
 					{
-						$ncard = trim($_POST['NPERSONNEL']);
+						$NPERSONNEL = trim($_POST['NPERSONNEL']);
 					}
 
 				if(isset($_POST['name']))
 					{
-						$ncard = trim($_POST['name']);
+						$name = trim($_POST['name']);
 					}
 				if(isset($_POST['surname']))
 					{
-						$ncard = trim($_POST['surname']);
+						$surname = trim($_POST['surname']);
 					}
 				if(isset($_POST['position']))
 					{
-						$ncard = trim($_POST['position']);
+						$position = trim($_POST['position']);
 					}
 				if(isset($_POST['change']))
 					{
@@ -102,17 +104,12 @@
 									throw new Exception ("<p><b>&nbsp&nbspВведите табельный номер</b></p>");
 
 
-								$sql = "UPDATE doctor SET NPERSONNEL = ?, name = ?, surname = ?, position = ?";
-								$result = $con->prepare($sql);
-								$result->execute([$NPERSONNEL,$name,$surname,$position]);
+								$doctor = Doctors::update_doctor($NPERSONNEL,$name,$surname,$position);
 
 								printf("<p><b>&nbsp&nbspЗапись успешно изменена!</b></p>");
 							}
-							catch (PDOException $e)
-							{
-								echo("<p><b>&nbsp&nbspВозникла непредвиденная ошибка: </b></p>") , $e->getMessage() . "<br/>";
-								die();
-							}   
+							
+						}   
 
 					        catch(Exception $e)
 					        {
@@ -135,21 +132,15 @@
 								if (empty($NPERSONNEL))
 									throw new Exception ("<p><b>&nbsp&nbspВведите табельный номер</b></p>");
 
-								$sql = "DELETE FROM doctor WHERE NPERSONNEL = ?";
-								$result = $con->prepare($sql);
-								$result->execute([$NPERSONNEL]);
+
+								$doctor = Doctors::delete_doctor($NPERSONNEL);
+								
 
 								printf("<p><b>&nbsp&nbspЗапись успешно удалена!</b></p>");
 
 							}
 					
-
-							catch (PDOException $e)
-							{
-								echo("<p><b>&nbsp&nbspВозникла непредвиденная ошибка: </b></p>") , $e->getMessage() . "<br/>";
-								die();
-							}   
-
+							
 					        catch(Exception $e)
 					        {
 					        	echo("<p><b>&nbsp&nbspВозникла ошибка: </b></p>") , $e->getMessage(), "\n";
