@@ -99,7 +99,7 @@
 				if(empty($w)) throw new Exception ("<p><b>&nbsp&nbspНе выбран Диагноз</b></p>");
 				if(empty($z)) throw new Exception ("<p><b>&nbsp&nbspНе выбрано Состояние</b></p>");    
 
-				$sql = "INSERT INTO `document` (ID_NCARD,ID_NPERSONNEL,date,ID_diagnosis,ID_state,prescription,procedures,room,comment) VALUES ('{$NCARD}','{$NPERSONNEL}','{$date}','{$w}','{$z}','{$prescription}','{$procedures}','{$room}','{$comment}')";
+				$sql = "CALL insert document (?,?,?,?,?,?,?,?,?)";
 				$res = $con->prepare($sql);
 				$res->execute([$NCARD,$NPERSONNEL,$date,$w,$z,$prescription,$procedures,$room,$comment]);
 

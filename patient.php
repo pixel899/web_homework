@@ -70,7 +70,7 @@
 					if(isset($_POST['submit']))
 					{
 
-						$result = $con->prepare("SELECT * FROM patient WHERE `NCARD` = ? OR `name`= ? OR `surname` = ? OR `age` = ? ");
+						$result = $con->prepare("CALL select_patient (?,?,?,?)");
 						$result->execute([$ncard,$name,$surname,$age]);
 						$count = $result->fetch(PDO::FETCH_ASSOC);
 						$row = $result->fetch();
