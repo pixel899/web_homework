@@ -18,6 +18,7 @@ class ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         '948ad5488880985ff1c06721a4e447fe' => __DIR__ . '/..' . '/cakephp/utility/bootstrap.php',
+        '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
     );
 
@@ -25,6 +26,10 @@ class ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46
         'v' => 
         array (
             'voku\\' => 5,
+        ),
+        'Z' => 
+        array (
+            'ZipStream\\' => 10,
         ),
         'S' => 
         array (
@@ -45,12 +50,17 @@ class ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46
         array (
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
+            'Psr\\Http\\Client\\' => 16,
             'Psr\\Container\\' => 14,
+            'PhpOffice\\PhpSpreadsheet\\' => 25,
             'Phinx\\' => 6,
         ),
         'M' => 
         array (
+            'MyCLabs\\Enum\\' => 13,
             'Models\\' => 7,
+            'Matrix\\' => 7,
         ),
         'I' => 
         array (
@@ -66,6 +76,7 @@ class ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46
         'C' => 
         array (
             'Controllers\\' => 12,
+            'Complex\\' => 8,
             'Carbon\\' => 7,
             'Cake\\Utility\\' => 13,
             'Cake\\Datasource\\' => 16,
@@ -78,6 +89,10 @@ class ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46
         'voku\\' => 
         array (
             0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
+        ),
+        'ZipStream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -135,17 +150,38 @@ class ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+        ),
+        'Psr\\Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'PhpOffice\\PhpSpreadsheet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
         ),
         'Phinx\\' => 
         array (
             0 => __DIR__ . '/..' . '/robmorgan/phinx/src/Phinx',
         ),
+        'MyCLabs\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
+        ),
         'Models\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app/models',
+        ),
+        'Matrix\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
         ),
         'Illuminate\\Support\\' => 
         array (
@@ -174,6 +210,10 @@ class ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46
         array (
             0 => __DIR__ . '/../..' . '/app/controllers',
         ),
+        'Complex\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
+        ),
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
@@ -196,12 +236,22 @@ class ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'H' => 
+        array (
+            'HTMLPurifier' => 
+            array (
+                0 => __DIR__ . '/..' . '/ezyang/htmlpurifier/library',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
-        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'Stringable' => __DIR__ . '/..' . '/myclabs/php-enum/stubs/Stringable.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );
@@ -211,6 +261,7 @@ class ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit16f0bc404b24ee0f8ba02b80ab92bb46::$classMap;
 
         }, null, ClassLoader::class);

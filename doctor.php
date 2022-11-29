@@ -68,6 +68,8 @@
 									
 					<button class="submit" type="submit" name="change">Изменить</button></br></br>
 					<button class="submit" type="submit" name="delete">Удалить</button>
+					<button class="submit" type="submit" name="exel">Экспорт в Exel</button>
+					<button class="submit" type="submit" name="pdf">Экспорт в Pdf</button>
 				</form>
 			</article>
 			<?php
@@ -146,6 +148,14 @@
 					        	echo("<p><b>&nbsp&nbspВозникла ошибка: </b></p>") , $e->getMessage(), "\n";
 					    	    die();
 					        }	
+					}
+				if(isset($_POST['exel']))
+					{
+						header("Location: exel.php"); exit;
+					}
+				if(isset($_POST['pdf']))
+					{
+						header("Location: pdf.php"); exit;
 					}
 			?>
 		</main>
